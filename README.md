@@ -18,17 +18,11 @@ You need a cat picture on your computer to use this mod!
 
 Want a custom cape? It's completely free! Simply message **"Xandarian"** on Discord to request your personalized cape.
 
-## �️ Development
+## Development
 
 ### Build the Mod
 
 To compile the mod, run the following Gradle command:
-
-```bash
-./gradlew build
-```
-
-Or on Windows:
 
 ```cmd
 .\gradlew.bat build
@@ -36,7 +30,7 @@ Or on Windows:
 
 The compiled mod file will be available in `build/libs/` directory.
 
-## �🔧 Technical Details
+## 🔧 Technical Details
 
 - **Fabric Mod Loader** compatible
 - **Client-side only** - no server installation required
