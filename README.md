@@ -30,6 +30,8 @@ To compile the mod, run the following Gradle command:
 
 The compiled mod file will be available in `build/libs/` directory.
 
+Note to Devs: All cape commands also start with /cape
+
 ## 🔧 Technical Details
 
 - **Fabric Mod Loader** compatible

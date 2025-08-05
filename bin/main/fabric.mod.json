@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "voidcapes",
-  "version": "0.1.0",
+  "version": "0.1.1-SNAPSHOT",
   "name": "VoidCapes",
   "description": "VoidCube cape provider for Minecraft",
   "authors": [
