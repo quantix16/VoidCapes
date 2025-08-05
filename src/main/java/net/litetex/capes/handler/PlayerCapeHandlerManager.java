@@ -61,7 +61,7 @@ public class PlayerCapeHandlerManager
 				TimeUnit.MILLISECONDS,
 				new DiscardingQueue<>(
 					loadExecutorWorkQueueSize, r -> {
-					LOG.warn("Overloaded - Discarded loading task for {}", this.submittedTasks.get(r));
+					LOG.warn("Overloaded - Discarded loading task for runnable: {}", r.getClass().getName());
 				}),
 				new ThreadFactory()
 				{
