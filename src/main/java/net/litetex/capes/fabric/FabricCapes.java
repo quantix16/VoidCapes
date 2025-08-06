@@ -15,6 +15,7 @@ import net.litetex.capes.command.CapeLoginCommand;
 import net.litetex.capes.command.CapeRefreshCommand;
 import net.litetex.capes.command.CapeSetCommand;
 import net.litetex.capes.command.CapeConfirmCommand;
+import net.litetex.capes.command.CapeRemoveCommand;
 import net.litetex.capes.config.AnimatedCapesHandling;
 import net.litetex.capes.config.Config;
 import net.litetex.capes.config.CredentialsManager;
@@ -43,6 +44,7 @@ public class FabricCapes implements ClientModInitializer
 			CapeLoginCommand.register(dispatcher);
 			CapeSetCommand.register(dispatcher);
 			CapeConfirmCommand.register(dispatcher);
+			CapeRemoveCommand.register(dispatcher);
 		});
 		
 		// Create a simple hardcoded config for Voidcube only
@@ -59,6 +61,7 @@ public class FabricCapes implements ClientModInitializer
 			LOG.debug("[VoidCapes] Shutting down Capes mod");
 			capes.shutdown();
 			CapeSetCommand.shutdown();
+			CapeRemoveCommand.shutdown();
 		}, "CapeProvider-Shutdown"));
 		
 		LOG.debug("[VoidCapes] Initialized");

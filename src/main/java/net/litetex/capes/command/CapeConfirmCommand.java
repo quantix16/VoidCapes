@@ -26,36 +26,48 @@ public class CapeConfirmCommand
 	
 	private static int execute(final CommandContext<FabricClientCommandSource> context)
 	{
-		// Check for any pending requests (we'll take the first one)
-		// In practice, there should typically only be one pending request at a time
-		final String foundPlayerName = CapeSetCommand.getPendingRequestPlayerName();
-		
-		if (foundPlayerName == null)
+		// Check for pending cape set requests first
+		final String foundSetPlayerName = CapeSetCommand.getPendingRequestPlayerName();
+		if (foundSetPlayerName != null)
 		{
-			context.getSource().sendError(
-				Text.literal("[VoidCapes] No pending cape requests found.")
-			);
-			return 0;
+			final CapeSetCommand.PendingCapeRequest setRequest = CapeSetCommand.getPendingRequest(foundSetPlayerName);
+			if (setRequest != null)
+			{
+				context.getSource().sendFeedback(
+					Text.literal("[VoidCapes] ").formatted(Formatting.GREEN)
+						.append(Text.literal("Confirming cape replacement for player: ").formatted(Formatting.WHITE))
+						.append(Text.literal(setRequest.playerName).formatted(Formatting.GOLD))
+				);
+				
+				// Confirm the pending cape set request
+				CapeSetCommand.confirmPendingRequest(foundSetPlayerName);
+				return 1;
+			}
 		}
 		
-		final CapeSetCommand.PendingCapeRequest request = CapeSetCommand.getPendingRequest(foundPlayerName);
-		if (request == null)
+		// Check for pending cape removal requests
+		final String foundRemovalPlayerName = CapeRemoveCommand.getPendingRemovalRequestPlayerName();
+		if (foundRemovalPlayerName != null)
 		{
-			context.getSource().sendError(
-				Text.literal("[VoidCapes] No pending cape requests found.")
-			);
-			return 0;
+			final CapeRemoveCommand.PendingCapeRemovalRequest removalRequest = CapeRemoveCommand.getPendingRemovalRequest(foundRemovalPlayerName);
+			if (removalRequest != null)
+			{
+				context.getSource().sendFeedback(
+					Text.literal("[VoidCapes] ").formatted(Formatting.GREEN)
+						.append(Text.literal("Confirming cape removal for player: ").formatted(Formatting.WHITE))
+						.append(Text.literal(removalRequest.playerName).formatted(Formatting.GOLD))
+				);
+				
+				// Confirm the pending cape removal request
+				CapeRemoveCommand.confirmPendingRemovalRequest(foundRemovalPlayerName);
+				return 1;
+			}
 		}
 		
-		context.getSource().sendFeedback(
-			Text.literal("[VoidCapes] ").formatted(Formatting.GREEN)
-				.append(Text.literal("Confirming cape replacement for player: ").formatted(Formatting.WHITE))
-				.append(Text.literal(request.playerName).formatted(Formatting.GOLD))
+		// No pending requests found
+		context.getSource().sendError(
+			Text.literal("[VoidCapes] No pending cape requests found.")
 		);
-		
-		// Confirm the pending request
-		CapeSetCommand.confirmPendingRequest(foundPlayerName);
-		
-		return 1;
+		return 0;
 	}
 }
