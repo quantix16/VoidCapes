@@ -5,6 +5,7 @@
 You need a cat picture on your computer to use this mod!
 
 [![Build and Upload Mod](https://github.com/pixo2000/VoidCapes/actions/workflows/build.yml/badge.svg)](https://github.com/pixo2000/VoidCapes/actions/workflows/build.yml)
+<a href="https://modrinth.com/mod/voidcapes"><img src="https://img.shields.io/modrinth/dt/voidcapes?logo=modrinth&label=Modrinth&style=flat&color=5ca424&suffix=%20&labelColor=black" alt="Modrinth"></a>
 
 ## ✨ Features
 
