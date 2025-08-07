@@ -18,6 +18,13 @@ You need a cat picture on your computer to use this mod!
 
 Want a custom cape? It's completely free! Simply message **"Xandarian"** on Discord to request your personalized cape.
 
+## FAQ
+Q: Will yo Support lower versions?
+A: Most likely not
+
+Q: Can i get admin?
+A: No
+
 ## Development
 
 ### Build the Mod
