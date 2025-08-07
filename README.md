@@ -4,6 +4,8 @@
 
 You need a cat picture on your computer to use this mod!
 
+[![Build and Upload Mod](https://github.com/pixo2000/VoidCapes/actions/workflows/build.yml/badge.svg)](https://github.com/pixo2000/VoidCapes/actions/workflows/build.yml)
+
 ## ✨ Features
 
 - **🎯 VoidCube Integration**: Seamlessly connects to VoidCube's cape service for custom cape display
