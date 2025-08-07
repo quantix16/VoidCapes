@@ -1,0 +1,79 @@
+name: PR Check
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Validate Gradle wrapper
+        uses: gradle/wrapper-validation-action@v2
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: 21
+          distribution: 'microsoft'
+
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v3
+
+      - name: Make gradlew executable
+        run: chmod +x ./gradlew
+
+      - name: Validate build
+        run: ./gradlew build --no-daemon
+
+      - name: Run code quality checks
+        run: |
+          ./gradlew checkstyleMain checkstyleTest -PcheckstyleEnabled
+          ./gradlew pmdMain pmdTest -PpmdEnabled
+
+      - name: Comment PR
+        uses: actions/github-script@v7
+        if: always()
+        with:
+          script: |
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+            });
+            
+            const botComment = comments.find(comment => 
+              comment.user.type === 'Bot' && comment.body.includes('Build Status')
+            );
+            
+            const success = '${{ job.status }}' === 'success';
+            const body = `## 🔧 Build Status
+            
+            ${success ? '✅ Build passed successfully!' : '❌ Build failed!'}
+            
+            ${success ? 
+              '- All code quality checks passed\n- Build completed without errors' : 
+              '- Please check the workflow logs for details\n- Fix any build or quality issues before merging'
+            }
+            
+            ---
+            *This comment is automatically updated by the PR Check workflow.*`;
+            
+            if (botComment) {
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: botComment.id,
+                body: body
+              });
+            } else {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body: body
+              });
+            }
